@@ -52,7 +52,7 @@ int main(void)
 
             ClearBackground(RAYWHITE);
 
-            DrawText("Hello World!", 190, 200, 20, LIGHTGRAY);
+            DrawText("Hello World!", screenWidth/2, screenHeight/2, 20, BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
