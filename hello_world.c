@@ -1,31 +1,3 @@
-/*******************************************************************************************
-*
-*   raylib [core] example - basic window
-*
-*   Example complexity rating: [★☆☆☆] 1/4
-*
-*   Welcome to raylib!
-*
-*   To test examples, just press F6 and execute 'raylib_compile_execute' script
-*   Note that compiled executable is placed in the same folder as .c file
-*
-*   To test the examples on Web, press F6 and execute 'raylib_compile_execute_web' script
-*   Web version of the program is generated in the same folder as .c file
-*
-*   You can find all basic examples on C:\raylib\raylib\examples folder or
-*   raylib official webpage: www.raylib.com
-*
-*   Enjoy using raylib. :)
-*
-*   Example originally created with raylib 1.0, last time updated with raylib 1.0
-*
-*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software
-*
-*   Copyright (c) 2013-2026 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include "raylib.h"
 
 //------------------------------------------------------------------------------------
@@ -40,6 +12,9 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
+    int screenCenterX = GetScreenWidth() / 2;
+    int screenCenterY = GetScreenHeight() / 2;
+
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -52,7 +27,15 @@ int main(void)
 
             ClearBackground(RAYWHITE);
 
-            DrawText("Hello World!", screenWidth/2, screenHeight/2, 20, BLACK);
+            const char text[] = "Hello World!";
+
+            int fontSize = 20;
+            int textWidth = MeasureText(text, fontSize);
+
+            int textStartX = screenCenterX - textWidth / 2;
+            int textStartY = screenCenterY - fontSize / 2;
+
+            DrawText(text, textStartX, textStartY, fontSize, BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
