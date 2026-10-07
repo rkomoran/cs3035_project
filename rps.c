@@ -1,66 +1,67 @@
-
+#include <stdlib.h>   
+#include <time.h>     
 #include "raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 
-#include <stdlib.h>   // rand, srand
-#include <time.h>     // time
-
 int main(void)
 {
-    // Create the window
-    InitWindow(600, 400, "Rock Paper Scissors");
+    srand(time(NULL));
+    
+    int screenWidth = 600;
+    int screenHeight = 400;
+
+    InitWindow(screenWidth, screenHeight, "raylib + raygui example - rock paper scissors");
     SetTargetFPS(60);
 
-    // Seed the random number generator so the computer's choice differs each run
-    srand(time(NULL));
+    int screenCenterX = GetScreenWidth() / 2;
+    int screenCenterY = GetScreenHeight() / 2;
 
-    // Make the raygui text a bit bigger
     GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
 
-    // Choices: 0 = Rock, 1 = Paper, 2 = Scissors, -1 = nothing picked yet
-    const char *names[3] = { "Rock", "Paper", "Scissors" };
+    char * names[3] = { "Rock", "Paper", "Scissors" };
     int playerChoice = -1;
     int computerChoice = -1;
 
-    const char *result = "Pick a move!";
+    char * result = "Pick a move!";
+
     int wins = 0;
     int losses = 0;
     int draws = 0;
 
-    // Game loop: runs until the window is closed
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Title and score
-        DrawText("Rock Paper Scissors", 150, 20, 30, DARKBLUE);
-        DrawText(TextFormat("Wins: %d    Losses: %d    Draws: %d", wins, losses, draws), 130, 70, 20, DARKGRAY);
+        char * title = "Rock Paper Scissors";
+        int titleX = screenCenterX - MeasureText(title, 30) / 2;
 
-        // Show what each side picked
+        DrawText(title, titleX, 20, 30, DARKBLUE);
+
+        char * resultCounts = TextFormat("Wins: %d\tLosses: %d\tDraws: %d", wins, losses, draws);
+        int resultCountsX = screenCenterX - MeasureText(resultCounts, 20) / 2;
+
+        DrawText(resultCounts, resultCountsX, 70, 20, DARKGRAY);
+
         if (playerChoice >= 0)
         {
-            DrawText(TextFormat("You chose: %s", names[playerChoice]), 180, 130, 24, BLACK);
-            DrawText(TextFormat("Computer chose: %s", names[computerChoice]), 180, 165, 24, BLACK);
+            DrawText(TextFormat("You chose: %s", names[playerChoice]), 40, 130, 24, BLACK);
+            DrawText(TextFormat("Computer chose: %s", names[computerChoice]), 40, 165, 24, BLACK);
         }
 
-        // Show the result
-        DrawText(result, 180, 220, 36, MAROON);
+        DrawText(result, 40, 220, 36, MAROON);
 
-        // Three buttons, one for each choice
         for (int i = 0; i < 3; i++)
         {
             Rectangle button = { 30 + i * 190, 300, 160, 60 };
 
-            // GuiButton returns true when the button is clicked
             if (GuiButton(button, names[i]))
             {
                 playerChoice = i;
-                computerChoice = rand() % 3;   // random number 0, 1 or 2
+                computerChoice = rand() % 3;  
 
-                // Work out who won
                 if (playerChoice == computerChoice)
                 {
                     result = "It's a draw!";
