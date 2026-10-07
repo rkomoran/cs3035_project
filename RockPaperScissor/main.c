@@ -1,5 +1,4 @@
 // Rock Paper Scissors - raylib + raygui (C)
-// Hands are drawn from shapes in code, so no image files are needed.
 #include "raylib.h"
 
 #define RAYGUI_IMPLEMENTATION
@@ -40,7 +39,6 @@ static Vector2 Pt(Hand h, float x, float y)
     return (Vector2){ h.x + x * h.f * h.s, h.y + y * h.s };
 }
 
-// A finger: thick line with round ends. pass 0 = outline, pass 1 = fill.
 static void Limb(Hand h, float x1, float y1, float x2, float y2, float t, int pass)
 {
     float thick = ((pass == 0) ? t + 2 * OUTLINE : t) * h.s;
